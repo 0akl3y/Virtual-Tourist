@@ -16,7 +16,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     var controller:NSFetchedResultsController?
     var imagesController:NSFetchedResultsController?
     var flickerClient: FlickerClient = FlickerClient()
+    var deleteMode = false
+    let imageCache = ImageCache()
+    
 
+    @IBOutlet var editButton: UIBarButtonItem!
 
     @IBOutlet var longTapGesture: UILongPressGestureRecognizer!
     var panGesture: UIPanGestureRecognizer = UIPanGestureRecognizer()
@@ -135,9 +139,58 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
         
         self.pinInFocus = view.annotation as? Pin
+        
+        if(self.deleteMode){
+        
+            self.removePinFromStore(self.pinInFocus!)
+            return
+            
+        }
+        
         self.performSegueWithIdentifier("pictures", sender: self)
         
     }
+    
+    func removePinFromStore(pin:Pin){
+        
+        //Remove pin and related images from store and from the map.
+        
+        for elm in self.controller?.fetchedObjects as! [Pin]{
+            
+            if((elm.coordinate.latitude == pin.coordinate.latitude) && (pin.coordinate.longitude == elm.coordinate.longitude)){
+                
+                for img in elm.images {
+                    
+                    let currentImg = img as! Image
+                    
+                    self.imageCache.storeImage(currentImg.id, image: nil, completion: nil)
+                    CoreDataStack.sharedObject().managedObjectContext?.deleteObject(img as! Image)
+                }
+                
+                CoreDataStack.sharedObject().managedObjectContext?.deleteObject(elm)
+                CoreDataStack.sharedObject().saveContext()
+                
+                self.mapView.removeAnnotation(pin)
+            
+            }
+        }
+    }
 
+    @IBAction func deletePins(sender: AnyObject) {
+        
+        self.deleteMode = !self.deleteMode
+        
+        if(self.deleteMode){
+            
+            self.editButton.title = "Done"
+        }
+        
+        else{
+            
+            self.editButton.title = "Edit"
+        
+        }
+        
+    }
 
 }

@@ -51,8 +51,15 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationItem key="navigationItem" title="Map" id="uSo-DS-4to"/>
+                    <navigationItem key="navigationItem" title="Map" id="uSo-DS-4to">
+                        <barButtonItem key="leftBarButtonItem" title="Edit" id="auy-XX-GLC">
+                            <connections>
+                                <action selector="deletePins:" destination="uI3-8k-Lds" id="aM7-6D-zsK"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="editButton" destination="auy-XX-GLC" id="pZ6-mF-kZS"/>
                         <outlet property="longTapGesture" destination="hei-By-nJO" id="DYo-k5-JbD"/>
                         <outlet property="mapView" destination="8E5-hm-LtH" id="bUX-qt-0Nn"/>
                         <segue destination="Ah7-4n-0Wa" kind="push" identifier="pictures" id="d1I-oc-w9P"/>

@@ -7,17 +7,17 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>0BB9B97A-561C-4C7F-BD91-5CA39A0D8807</string>
 	<key>IDESourceControlProjectName</key>
-	<string>Virtual Tourist</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>393C6E804D1D0C46483D5DA72E9681579854722E</key>
+		<key>6C4EA14E4D3AECAC75E413BFE0E0479263A61B42</key>
 		<string>https://github.com/0akl3y/Virtual-Tourist.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Virtual Tourist.xcodeproj</string>
+	<string>Virtual Tourist.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>393C6E804D1D0C46483D5DA72E9681579854722E</key>
+		<key>6C4EA14E4D3AECAC75E413BFE0E0479263A61B42</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -25,16 +25,16 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>393C6E804D1D0C46483D5DA72E9681579854722E</string>
+	<string>6C4EA14E4D3AECAC75E413BFE0E0479263A61B42</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>393C6E804D1D0C46483D5DA72E9681579854722E</string>
+			<string>6C4EA14E4D3AECAC75E413BFE0E0479263A61B42</string>
 			<key>IDESourceControlWCCName</key>
-			<string>Virtual%20Tourist%20New</string>
+			<string>Virtual-Tourist</string>
 		</dict>
 	</array>
 </dict>
