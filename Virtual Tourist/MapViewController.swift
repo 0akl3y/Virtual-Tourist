@@ -33,13 +33,21 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         self.mapView.delegate = self
         self.longTapGesture.delegate = self
         self.fetchPins()
+        
 
         // Do any additional setup after loading the view.
     }
         
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.setToolbarHidden(true, animated: false)
+        self.presentedViewController?.removeFromParentViewController()
+        
+        
+        self.pinInFocus = nil
+        
     }
+   
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -93,11 +101,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         let tapPosition:CGPoint = sender.locationInView(self.mapView)
         let positionOnMap = self.convertTapToPosition(tapPosition)
         
+        if(self.deleteMode){return}
+        
         switch(sender.state){
             
             case UIGestureRecognizerState.Began:
                 
-                self.pinInFocus = Pin(coordinate: positionOnMap)
+                self.pinInFocus = Pin(coordinate: positionOnMap) as Pin
                 self.mapView.addAnnotation(self.pinInFocus!)
                 break
             
@@ -108,6 +118,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
             case UIGestureRecognizerState.Ended:
                             
                 flickerClient.fetchPinFromFlickr(self.pinInFocus!, entriesPerPage: 20, page: 1)
+                self.controller?.performFetch(nil)
             
             default:
                 
@@ -137,15 +148,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     }
     
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
-        
+                
         self.pinInFocus = view.annotation as? Pin
+        self.mapView.deselectAnnotation(self.pinInFocus, animated: false)
+        
         
         if(self.deleteMode){
-        
+            
             self.removePinFromStore(self.pinInFocus!)
             return
             
         }
+        
         
         self.performSegueWithIdentifier("pictures", sender: self)
         

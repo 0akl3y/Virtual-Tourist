@@ -154,6 +154,7 @@ class FlickerClient: SimpleNetworking {
                                         if(currentIdx == allPhotos.count){
                                             
                                             pin.expectedImages = nil // download completed no more images expected
+                                            CoreDataStack.sharedObject().saveContext()
                                             self.delegate?.didDownloadAllImages()
                                             
                                         }

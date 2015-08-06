@@ -15,7 +15,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     var flickerClient: FlickerClient?
     
     var fetchedImagesController:NSFetchedResultsController!
-    var selectedPin: Pin!
+    weak var selectedPin: Pin?
     var imageCache = ImageCache()
     
     var indicesToInsert: [NSIndexPath]?
@@ -41,14 +41,14 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         self.flickerClient?.delegate = self
         
         self.mapView.addAnnotation(self.selectedPin)
-        mapView.setCenterCoordinate(self.selectedPin.coordinate, animated: true)
+        mapView.setCenterCoordinate(self.selectedPin!.coordinate, animated: true)
         
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
-        self.fetchImagesFor(self.selectedPin)
+        self.fetchImagesFor(self.selectedPin!)
         self.collectionView.reloadData()
         self.collectionView.setNeedsDisplay()
         self.newCollectionButton.enabled = false
@@ -56,6 +56,13 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         self.navigationController?.setToolbarHidden(false, animated: false)
         self.noImagesLabel.hidden = true
         
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(true)
+        
+        self.fetchedImagesController =  nil
+
     }
     
     func fetchImagesFor(pin:Pin){
@@ -84,12 +91,12 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         
         //update button status after fetch
         
-        if(self.selectedPin.expectedImages == nil){
+        if(self.selectedPin!.expectedImages == nil){
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 
-                self.newCollectionButton.enabled = self.fetchedImagesController.fetchedObjects!.count == self.selectedPin.images.count
-                self.noImagesLabel.hidden = self.selectedPin.images.count > 0
+                self.newCollectionButton.enabled = self.fetchedImagesController.fetchedObjects!.count == self.selectedPin!.images.count
+                self.noImagesLabel.hidden = self.selectedPin!.images.count > 0
                 println(self.noImagesLabel.hidden)
               
             })
@@ -196,7 +203,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         
         println("the number of expected images is currently: \(self.selectedPin?.expectedImages)")
         
-        if let expectedDownloads = self.selectedPin.expectedImages{
+        if let expectedDownloads = self.selectedPin?.expectedImages{
             // This means images are expected and eventually not yet in the managedObjectContext
             
             if(expectedDownloads > sectionInfo.numberOfObjects){
@@ -209,8 +216,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         
         }
         
-        println("The number of objects in section is: \(self.selectedPin.images.count )")
-        return self.selectedPin.images.count // sectionInfo.numberOfObjects turned out to be unreliable
+        return self.selectedPin!.images.count
     }
 
     
@@ -262,12 +268,12 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         
         //fetch new page
         
-        let totalPageNumber = self.selectedPin.totalPages > 0 ? self.selectedPin.totalPages : 1
+        let totalPageNumber = self.selectedPin!.totalPages > 0 ? self.selectedPin!.totalPages : 1
         
-        let nextPageIdx = Int((self.selectedPin.lastPage + 1)) % totalPageNumber!
+        let nextPageIdx = Int((self.selectedPin!.lastPage + 1)) % totalPageNumber!
         let pageToFetch = nextPageIdx > 0 ? nextPageIdx : 1
         
-        self.flickerClient?.fetchPinFromFlickr(self.selectedPin, entriesPerPage: 20, page: pageToFetch)
+        self.flickerClient?.fetchPinFromFlickr(self.selectedPin!, entriesPerPage: 20, page: pageToFetch)
     }
     
     
@@ -278,7 +284,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
             let allImages = self.fetchedImagesController.fetchedObjects as! [Image]
             let imageToDelete = allImages[indexPath.row]
             
-            self.selectedPin.expectedImages = nil
+            self.selectedPin!.expectedImages = nil
             self.imageCache.storeImage(imageToDelete.id, image: nil, completion: nil)
                 CoreDataStack.sharedObject().managedObjectContext?.deleteObject(imageToDelete)}
     
