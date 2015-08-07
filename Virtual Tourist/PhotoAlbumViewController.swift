@@ -338,6 +338,15 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
             targetVC.imageToDisplay = self.selectedImage!
         }
     }
+    
+    //MARK:- FlickerClient delegate methods
+    
+    func errorOccuredWhileFetching(error:NSError) {
+        let errorMessage = ErrorHandler(targetVC: self)
+        errorMessage.displayErrorMessage(error)
+        self.newCollectionButton.enabled = true
+        
+    }
 
 
 }

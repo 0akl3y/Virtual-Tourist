@@ -10,16 +10,19 @@ import UIKit
 import CoreData
 
 
-protocol FlickerClientDelegate{
+@objc protocol FlickerClientDelegate{
     
     // If the basic information is fetche the flicker client will start to fetcht the images
-    func willDownloadImages()
+    optional func willDownloadImages()
     
     // When the images have been completely fetched to the persistent store
-    func didDownloadAllImages()
+    optional func didDownloadAllImages()
     
     // If there are no images to fetch
-    func foundNoImagesForPin()
+    optional func foundNoImagesForPin()
+    
+    // If a network error occured
+    optional func errorOccuredWhileFetching(error:NSError)
 
 }
 
@@ -57,30 +60,26 @@ class FlickerClient: SimpleNetworking {
         
         }
         
+        var requetError:NSError? = nil
+        
         self.sendGETRequest(BASE_URL, GETData: methodArguments, headerValues: nil) { (result, error) -> Void in
-            
-            var error:NSError? = nil
-            
-            let parsedResult = NSJSONSerialization.JSONObjectWithData(result!, options: NSJSONReadingOptions.allZeros, error: &error) as! [String:AnyObject]
             
             if(error != nil){
                 
                 println("There was an error converting the JSON Data: \(error)")
+                self.delegate?.errorOccuredWhileFetching?(error!)
+                return
             
             }
             
-            println(parsedResult)
+            let parsedResult = NSJSONSerialization.JSONObjectWithData(result!, options: NSJSONReadingOptions.allZeros, error: nil) as! [String:AnyObject]
             
             if let photoList = parsedResult["photos"] as? [String: AnyObject]{
                 
                 //set number of expected entries for later reference
                 
-                println(photoList["total"]!)
-                
                 let totalImages = photoList["total"] as! NSString // Workaroud for a strange error
-                
                 self.totalEntries = totalImages.integerValue
-
                 
                 let photosPerPage = photoList["perpage"] as! Int
                 
@@ -101,12 +100,12 @@ class FlickerClient: SimpleNetworking {
                     if(self.totalEntries == 0){
                         
                         pin.expectedImages = nil //Download completed no more images expectedd
-                        self.delegate?.foundNoImagesForPin()
+                        self.delegate?.foundNoImagesForPin?()
                         CoreDataStack.sharedObject().saveContext()
                         return
                     }
 
-                    self.delegate?.willDownloadImages()
+                    self.delegate?.willDownloadImages?()
 
                 })
                 
@@ -120,7 +119,8 @@ class FlickerClient: SimpleNetworking {
                     self.sendGETRequest(imageURL, GETData: nil, headerValues: nil, completion: { (result, error) -> Void in
                         
                             if(error != nil){
-                                println("Imaged data error: \(error)")
+                                println("Imaged data error: \(error!)")
+                                self.delegate?.errorOccuredWhileFetching?(error!)
                                 return
                             }
                         
@@ -143,11 +143,7 @@ class FlickerClient: SimpleNetworking {
                                         // Add PIN relation Test
                                         
                                         currentIdx += 1
-                                        
                                         newImage.pin = pin
-                                        
-                                        println("Current Index is: \(currentIdx)")
-                                        println("All photos count is: \(allPhotos.count)")
                                         
                                         // Save context in the completion handler when all photo are fetched
                                         
@@ -155,7 +151,7 @@ class FlickerClient: SimpleNetworking {
                                             
                                             pin.expectedImages = nil // download completed no more images expected
                                             CoreDataStack.sharedObject().saveContext()
-                                            self.delegate?.didDownloadAllImages()
+                                            self.delegate?.didDownloadAllImages?()
                                             
                                         }
                                         

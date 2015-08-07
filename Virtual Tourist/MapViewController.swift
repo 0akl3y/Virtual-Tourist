@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreData
 
-class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate{
+class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate, FlickerClientDelegate{
     
     var pinInFocus:Pin?
     var controller:NSFetchedResultsController?
@@ -18,7 +18,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     var flickerClient: FlickerClient = FlickerClient()
     var deleteMode = false
     let imageCache = ImageCache()
-    
 
     @IBOutlet var editButton: UIBarButtonItem!
 
@@ -33,6 +32,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         
         self.mapView.delegate = self
         self.longTapGesture.delegate = self
+        self.flickerClient.delegate = self
         self.fetchPins()
         
 
@@ -201,16 +201,22 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
             self.editButton.title = "Done"
             self.deleteStatusLabel.hidden = false
             
-
         }
         
         else{
-            
             self.editButton.title = "Edit"            
             self.deleteStatusLabel.hidden = true
-        
         }
         
     }
+    
+    //MARK:- FlickerClient delegate methods
+    
+    func errorOccuredWhileFetching(error: NSError) {
+        var errorMessage = ErrorHandler(targetVC: self)
+        errorMessage.displayErrorMessage(error)
+    }
+    
+    
 
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8F00A77C1B753E75005B7016 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F00A77B1B753E75005B7016 /* DetailViewController.swift */; };
+		8F00A77E1B754989005B7016 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F00A77D1B754989005B7016 /* ErrorHandler.swift */; };
 		8F0657361B63D13600A5628E /* SimpleNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0657351B63D13600A5628E /* SimpleNetworking.swift */; };
 		8F0657381B63D1B000A5628E /* FlickerClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0657371B63D1B000A5628E /* FlickerClient.swift */; };
 		8F06573A1B63D32300A5628E /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0657391B63D32300A5628E /* ImageCache.swift */; };
@@ -37,6 +38,7 @@
 
 /* Begin PBXFileReference section */
 		8F00A77B1B753E75005B7016 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		8F00A77D1B754989005B7016 /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		8F0657351B63D13600A5628E /* SimpleNetworking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleNetworking.swift; sourceTree = "<group>"; };
 		8F0657371B63D1B000A5628E /* FlickerClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickerClient.swift; sourceTree = "<group>"; };
 		8F0657391B63D32300A5628E /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				8FECE5B31B5EBA8D0046BB4C /* PhotoAlbumViewController.swift */,
 				8FECE5D41B5EC0950046BB4C /* MapViewController.swift */,
 				8FECE5B51B5EBA8D0046BB4C /* Main.storyboard */,
+				8F00A77D1B754989005B7016 /* ErrorHandler.swift */,
 				8F00A77B1B753E75005B7016 /* DetailViewController.swift */,
 				8FECE5B81B5EBA8D0046BB4C /* Images.xcassets */,
 				8FECE5BA1B5EBA8D0046BB4C /* LaunchScreen.xib */,
@@ -263,6 +266,7 @@
 				8FECE5D21B5EBB9D0046BB4C /* CoreDataStack.swift in Sources */,
 				8FF2A2481B6B397B00060B1F /* ImageCollectionViewCell.swift in Sources */,
 				8FECE5B01B5EBA8D0046BB4C /* Virtual_Tourist.xcdatamodeld in Sources */,
+				8F00A77E1B754989005B7016 /* ErrorHandler.swift in Sources */,
 				8F06573A1B63D32300A5628E /* ImageCache.swift in Sources */,
 				8FECE5AD1B5EBA8D0046BB4C /* AppDelegate.swift in Sources */,
 				8F0657381B63D1B000A5628E /* FlickerClient.swift in Sources */,
