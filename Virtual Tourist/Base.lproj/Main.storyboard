@@ -42,10 +42,10 @@
                                 </connections>
                             </mapView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap pins to remove" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oBp-iO-DMS">
-                                <rect key="frame" x="0.0" y="492" width="320" height="32"/>
+                                <rect key="frame" x="0.0" y="65" width="320" height="45"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="gs0-h3-UcD"/>
+                                    <constraint firstAttribute="height" constant="45" id="gs0-h3-UcD"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -55,11 +55,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="oBp-iO-DMS" secondAttribute="centerX" id="DR4-4R-wSF"/>
-                            <constraint firstItem="s8y-9d-9P6" firstAttribute="top" secondItem="oBp-iO-DMS" secondAttribute="bottom" id="Gre-sP-c7S"/>
                             <constraint firstAttribute="width" secondItem="8E5-hm-LtH" secondAttribute="width" id="HCr-VL-6s5"/>
                             <constraint firstAttribute="centerX" secondItem="8E5-hm-LtH" secondAttribute="centerX" id="TOn-Am-kRb"/>
                             <constraint firstAttribute="height" secondItem="8E5-hm-LtH" secondAttribute="height" id="h1B-sZ-31D"/>
                             <constraint firstAttribute="centerY" secondItem="8E5-hm-LtH" secondAttribute="centerY" id="nEe-Tf-MS7"/>
+                            <constraint firstItem="8E5-hm-LtH" firstAttribute="top" secondItem="oBp-iO-DMS" secondAttribute="bottom" constant="-110" id="zXU-Fi-Qyr"/>
                             <constraint firstItem="oBp-iO-DMS" firstAttribute="width" secondItem="8E5-hm-LtH" secondAttribute="width" id="zby-Yg-MdF"/>
                         </constraints>
                     </view>
@@ -100,12 +100,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NPT-ZP-Q8a">
-                                <rect key="frame" x="0.0" y="64" width="320" height="86"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="86" id="GYa-Hr-tJg"/>
-                                </constraints>
-                            </mapView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="vXy-cf-Nga">
                                 <rect key="frame" x="0.0" y="150" width="320" height="418"/>
                                 <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -140,6 +134,12 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NPT-ZP-Q8a">
+                                <rect key="frame" x="0.0" y="64" width="320" height="86"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="86" id="GYa-Hr-tJg"/>
+                                </constraints>
+                            </mapView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No images found for this location" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bd1-bO-rwT">
                                 <rect key="frame" x="33" y="274" width="255" height="21"/>
                                 <constraints>
@@ -150,17 +150,30 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap images to remove" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P49-Qy-KJ4">
+                                <rect key="frame" x="0.0" y="150" width="320" height="45"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="OqV-eg-QCe"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="P49-Qy-KJ4" firstAttribute="width" secondItem="NPT-ZP-Q8a" secondAttribute="width" id="3YK-47-zd3"/>
                             <constraint firstItem="NPT-ZP-Q8a" firstAttribute="top" secondItem="cIm-e0-J51" secondAttribute="bottom" id="3ta-uB-dyq"/>
                             <constraint firstAttribute="centerY" secondItem="bd1-bO-rwT" secondAttribute="centerY" id="6JU-5r-5oJ"/>
                             <constraint firstAttribute="centerX" secondItem="vXy-cf-Nga" secondAttribute="centerX" id="A5O-Co-0fH"/>
                             <constraint firstAttribute="width" secondItem="vXy-cf-Nga" secondAttribute="width" id="FCv-7H-7FO"/>
                             <constraint firstItem="a0L-h9-sNL" firstAttribute="top" secondItem="vXy-cf-Nga" secondAttribute="bottom" constant="-44" id="JAC-xV-JLb"/>
+                            <constraint firstAttribute="centerX" secondItem="P49-Qy-KJ4" secondAttribute="centerX" id="LCJ-bM-mdY"/>
                             <constraint firstAttribute="width" secondItem="NPT-ZP-Q8a" secondAttribute="width" id="Tco-JH-6RX"/>
                             <constraint firstAttribute="height" secondItem="vXy-cf-Nga" secondAttribute="height" constant="150" id="djo-p3-DXL"/>
                             <constraint firstAttribute="centerX" secondItem="NPT-ZP-Q8a" secondAttribute="centerX" id="ndh-ty-OYu"/>
+                            <constraint firstItem="P49-Qy-KJ4" firstAttribute="top" secondItem="NPT-ZP-Q8a" secondAttribute="bottom" id="obT-CC-0sM"/>
                             <constraint firstAttribute="centerX" secondItem="bd1-bO-rwT" secondAttribute="centerX" id="tbU-bQ-fhl"/>
                         </constraints>
                     </view>
@@ -173,18 +186,60 @@
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="Bwd-NC-k6y"/>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="Pictures" id="cra-N8-TIN"/>
+                    <navigationItem key="navigationItem" title="Pictures" id="cra-N8-TIN">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="frf-GJ-j9T">
+                            <connections>
+                                <action selector="toggleDeleteMode:" destination="Ah7-4n-0Wa" id="qwp-Cc-twL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="collectionView" destination="vXy-cf-Nga" id="4LM-iu-cGc"/>
+                        <outlet property="editButton" destination="frf-GJ-j9T" id="7oV-xx-enf"/>
+                        <outlet property="editModeLabel" destination="P49-Qy-KJ4" id="KZJ-cI-lwi"/>
                         <outlet property="mapView" destination="NPT-ZP-Q8a" id="xWY-72-XAa"/>
                         <outlet property="newCollectionButton" destination="k36-FJ-HMA" id="MGD-SD-4wy"/>
                         <outlet property="noImagesLabel" destination="bd1-bO-rwT" id="pMc-2v-tZJ"/>
+                        <segue destination="Hkd-gE-kKk" kind="push" identifier="detailView" id="ged-yG-QHg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lrm-kH-fPn" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="716" y="60"/>
+            <point key="canvasLocation" x="707" y="60"/>
+        </scene>
+        <!--Detail View-->
+        <scene sceneID="yu6-2g-UKR">
+            <objects>
+                <viewController id="Hkd-gE-kKk" customClass="DetailViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bWC-tG-tD6"/>
+                        <viewControllerLayoutGuide type="bottom" id="1Ae-rL-whN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nvt-vf-Xzd">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WcW-eU-uwk">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="WcW-eU-uwk" secondAttribute="centerY" id="9Ih-RH-cZS"/>
+                            <constraint firstAttribute="height" secondItem="WcW-eU-uwk" secondAttribute="height" id="PAe-tD-uP4"/>
+                            <constraint firstAttribute="centerX" secondItem="WcW-eU-uwk" secondAttribute="centerX" id="ZD7-kI-02Q"/>
+                            <constraint firstAttribute="width" secondItem="WcW-eU-uwk" secondAttribute="width" id="iNL-hS-747"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Detail View" id="Viz-NZ-x5i"/>
+                    <connections>
+                        <outlet property="imageView" destination="WcW-eU-uwk" id="Egs-hQ-1Jg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pvR-xp-Pv4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1093" y="60"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

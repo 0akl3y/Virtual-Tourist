@@ -17,11 +17,12 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     var fetchedImagesController:NSFetchedResultsController!
     weak var selectedPin: Pin?
     var imageCache = ImageCache()
-    
     var indicesToInsert: [NSIndexPath]?
+    var selectedImage: UIImage?
     
     var shouldReloadAll = false
     var itemsToDelete: [NSIndexPath]?
+    var editMode = false
 
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var collectionView: UICollectionView!
@@ -29,6 +30,8 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBOutlet var newCollectionButton: UIBarButtonItem!
     @IBOutlet var noImagesLabel: UILabel!
     
+    @IBOutlet var editModeLabel: UILabel!
+    @IBOutlet var editButton: UIBarButtonItem!
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -55,6 +58,8 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         
         self.navigationController?.setToolbarHidden(false, animated: false)
         self.noImagesLabel.hidden = true
+        self.editModeLabel.hidden = true
+        self.editButton.enabled = false
         
     }
     
@@ -96,8 +101,8 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 
                 self.newCollectionButton.enabled = self.fetchedImagesController.fetchedObjects!.count == self.selectedPin!.images.count
+                self.editButton.enabled = self.newCollectionButton.enabled
                 self.noImagesLabel.hidden = self.selectedPin!.images.count > 0
-                println(self.noImagesLabel.hidden)
               
             })
 
@@ -122,6 +127,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         println("download completed no more images")
         self.noImagesLabel.hidden = true
         self.newCollectionButton.enabled = true
+        self.editButton.enabled = true
         
         self.noImagesLabel.hidden = self.flickerClient!.totalEntries > 0
     }
@@ -132,6 +138,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         
         self.noImagesLabel.hidden = false
         self.newCollectionButton.enabled = true
+        
 
     }
     
@@ -171,10 +178,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
             return
         
         }
-        
     }
-    
-
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         
@@ -250,9 +254,41 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
                 
     }
     
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        if(self.newCollectionButton.enabled){
+            
+            if(self.editMode){
+                
+                let allImages = self.fetchedImagesController.fetchedObjects as! [Image]
+                let imageToDelete = allImages[indexPath.row]
+                
+                self.selectedPin!.expectedImages = nil
+                self.imageCache.storeImage(imageToDelete.id, image: nil, completion: nil)
+                CoreDataStack.sharedObject().managedObjectContext?.deleteObject(imageToDelete)
+            }
+        
+            else{
+            
+                let selectedCell = collectionView.cellForItemAtIndexPath(indexPath) as! ImageCollectionViewCell
+                self.selectedImage = selectedCell.imageView.image
+            
+                if(self.selectedImage != nil){
+                    
+                     performSegueWithIdentifier("detailView", sender: self)
+                
+                }
+            }
+        }
+    
+    }
+    
+    // MARK:- Action outlets
+    
     @IBAction func fetchNewCollection(sender: UIBarButtonItem) {
         
         self.newCollectionButton.enabled = false
+        self.editButton.enabled = false
         
         //remove previous fetches from persistent store
         
@@ -277,18 +313,32 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
-        if(self.newCollectionButton.enabled){
-        
-            let allImages = self.fetchedImagesController.fetchedObjects as! [Image]
-            let imageToDelete = allImages[indexPath.row]
-            
-            self.selectedPin!.expectedImages = nil
-            self.imageCache.storeImage(imageToDelete.id, image: nil, completion: nil)
-                CoreDataStack.sharedObject().managedObjectContext?.deleteObject(imageToDelete)}
     
+    @IBAction func toggleDeleteMode(sender: AnyObject) {
+        
+        self.editMode = !self.editMode
+        
+        if(self.editMode){
+            self.editButton.title = "Done"
+            self.navigationController?.setToolbarHidden(true, animated: true)
+            self.editModeLabel.hidden = false
         }
+        
+        else{
+            self.editButton.title = "Edit"
+            self.navigationController?.setToolbarHidden(false, animated: true)
+            self.editModeLabel.hidden = true
+        }
+        
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if(segue.identifier == "detailView"){
+            let targetVC = segue.destinationViewController as! DetailViewController
+            targetVC.imageToDisplay = self.selectedImage!
+        }
+    }
+
 
 }
 
