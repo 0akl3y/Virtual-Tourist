@@ -26,6 +26,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     var panGesture: UIPanGestureRecognizer = UIPanGestureRecognizer()
     
     @IBOutlet var mapView: MKMapView!
+    @IBOutlet var deleteStatusLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +45,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         
         
         self.pinInFocus = nil
+        self.deleteStatusLabel.hidden = true
         
     }
    
@@ -197,11 +199,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         if(self.deleteMode){
             
             self.editButton.title = "Done"
+            self.deleteStatusLabel.hidden = false
+            
+
         }
         
         else{
             
-            self.editButton.title = "Edit"
+            self.editButton.title = "Edit"            
+            self.deleteStatusLabel.hidden = true
         
         }
         

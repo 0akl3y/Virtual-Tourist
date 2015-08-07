@@ -41,13 +41,26 @@
                                     <outletCollection property="gestureRecognizers" destination="hei-By-nJO" appends="YES" id="rAR-ij-3tI"/>
                                 </connections>
                             </mapView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap pins to remove" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oBp-iO-DMS">
+                                <rect key="frame" x="0.0" y="492" width="320" height="32"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="gs0-h3-UcD"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="oBp-iO-DMS" secondAttribute="centerX" id="DR4-4R-wSF"/>
+                            <constraint firstItem="s8y-9d-9P6" firstAttribute="top" secondItem="oBp-iO-DMS" secondAttribute="bottom" id="Gre-sP-c7S"/>
                             <constraint firstAttribute="width" secondItem="8E5-hm-LtH" secondAttribute="width" id="HCr-VL-6s5"/>
                             <constraint firstAttribute="centerX" secondItem="8E5-hm-LtH" secondAttribute="centerX" id="TOn-Am-kRb"/>
                             <constraint firstAttribute="height" secondItem="8E5-hm-LtH" secondAttribute="height" id="h1B-sZ-31D"/>
                             <constraint firstAttribute="centerY" secondItem="8E5-hm-LtH" secondAttribute="centerY" id="nEe-Tf-MS7"/>
+                            <constraint firstItem="oBp-iO-DMS" firstAttribute="width" secondItem="8E5-hm-LtH" secondAttribute="width" id="zby-Yg-MdF"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
@@ -59,6 +72,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="deleteStatusLabel" destination="oBp-iO-DMS" id="Vjz-CW-uYn"/>
                         <outlet property="editButton" destination="auy-XX-GLC" id="pZ6-mF-kZS"/>
                         <outlet property="longTapGesture" destination="hei-By-nJO" id="DYo-k5-JbD"/>
                         <outlet property="mapView" destination="8E5-hm-LtH" id="bUX-qt-0Nn"/>
