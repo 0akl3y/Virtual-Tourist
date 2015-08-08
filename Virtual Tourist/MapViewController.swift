@@ -18,6 +18,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     var flickerClient: FlickerClient = FlickerClient()
     var deleteMode = false
     let imageCache = ImageCache()
+    
+    var currentPosition:CLLocationCoordinate2D?
+    let defaults = NSUserDefaults()
 
     @IBOutlet var editButton: UIBarButtonItem!
 
@@ -38,23 +41,42 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
 
         // Do any additional setup after loading the view.
     }
+    
+    //MARK:- ViewController delegate methods
         
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.setToolbarHidden(true, animated: false)
         self.presentedViewController?.removeFromParentViewController()
         
+        // Check for last view positon
+        
+        if let currentLatitude = self.defaults.valueForKey("currentLatitude") as? Double{
+            
+            let currentLongitude: Double = self.defaults.valueForKey("currentLongitude") as! Double
+            let currentLatDelta: Double = self.defaults.valueForKey("latitudeDelta") as! Double
+            let currentLonDelta: Double = self.defaults.valueForKey("longitudeDelta") as! Double
+            
+            let centerCoordinate = CLLocationCoordinate2D(latitude: currentLatitude, longitude: currentLongitude)
+            let span = MKCoordinateSpan(latitudeDelta: currentLatDelta, longitudeDelta: currentLonDelta)
+            
+            let currentRegion = MKCoordinateRegionMake(centerCoordinate, span)
+            
+            self.mapView.setRegion(currentRegion, animated: false)
+
+        }
         
         self.pinInFocus = nil
         self.deleteStatusLabel.hidden = true
         
     }
-   
     
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func viewWillDisappear(animated: Bool) {
+        
     }
+
+    //MARK:- Actions and helper methods
     
     func fetchPins(){
         
@@ -76,18 +98,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
             println("There was an error fetching all pins: \(error)")
             
         }
-    }
-    
-    
-    
-    func mapViewDidFinishLoadingMap(mapView: MKMapView!) {
-        
-        for pinObject in self.controller!.fetchedObjects as! [Pin]{
-            
-            mapView.addAnnotation(pinObject)
-            
-        }
-
     }
     
     func convertTapToPosition(tapPosition: CGPoint) -> CLLocationCoordinate2D{
@@ -125,9 +135,25 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
             default:
                 
                 return
+        }
+    }
+    
+    @IBAction func deletePins(sender: AnyObject) {
         
-        }        
-
+        self.deleteMode = !self.deleteMode
+        
+        if(self.deleteMode){
+            
+            self.editButton.title = "Done"
+            self.deleteStatusLabel.hidden = false
+            
+        }
+            
+        else{
+            self.editButton.title = "Edit"
+            self.deleteStatusLabel.hidden = true
+        }
+        
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -140,31 +166,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
             photoVC.flickerClient = sender!.flickerClient
         
         }
-    }
-    
-
-    func mapView(mapView: MKMapView!, didAddAnnotationViews views: [AnyObject]!) {
-        
-        let annotationView = views[0] as! MKAnnotationView
-        let selectedPin = annotationView.annotation as! Pin
-    }
-    
-    func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
-                
-        self.pinInFocus = view.annotation as? Pin
-        self.mapView.deselectAnnotation(self.pinInFocus, animated: false)
-        
-        
-        if(self.deleteMode){
-            
-            self.removePinFromStore(self.pinInFocus!)
-            return
-            
-        }
-        
-        
-        self.performSegueWithIdentifier("pictures", sender: self)
-        
     }
     
     func removePinFromStore(pin:Pin){
@@ -191,22 +192,48 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
             }
         }
     }
-
-    @IBAction func deletePins(sender: AnyObject) {
+    
+    //MARK:- MKMapView delegate methods
+    
+    
+    func mapView(mapView: MKMapView!, regionDidChangeAnimated animated: Bool) {
         
-        self.deleteMode = !self.deleteMode
+        self.defaults.setValue(self.mapView.region.center.latitude, forKeyPath: "currentLatitude")
+        self.defaults.setValue(self.mapView.region.center.longitude, forKeyPath: "currentLongitude")
+        self.defaults.setValue(self.mapView.region.span.latitudeDelta, forKeyPath: "latitudeDelta")
+        self.defaults.setValue(self.mapView.region.span.longitudeDelta, forKeyPath: "longitudeDelta")
+    }
+    
+    func mapViewDidFinishLoadingMap(mapView: MKMapView!) {
+        
+        for pinObject in self.controller!.fetchedObjects as! [Pin]{
+            
+            mapView.addAnnotation(pinObject)
+            
+        }
+    }
+    
+    func mapView(mapView: MKMapView!, didAddAnnotationViews views: [AnyObject]!) {
+        
+        let annotationView = views[0] as! MKAnnotationView
+        let selectedPin = annotationView.annotation as! Pin
+    }
+    
+    func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
+        
+        self.pinInFocus = view.annotation as? Pin
+        self.mapView.deselectAnnotation(self.pinInFocus, animated: false)
+        
         
         if(self.deleteMode){
             
-            self.editButton.title = "Done"
-            self.deleteStatusLabel.hidden = false
+            self.removePinFromStore(self.pinInFocus!)
+            return
             
         }
         
-        else{
-            self.editButton.title = "Edit"            
-            self.deleteStatusLabel.hidden = true
-        }
+        
+        self.performSegueWithIdentifier("pictures", sender: self)
         
     }
     
