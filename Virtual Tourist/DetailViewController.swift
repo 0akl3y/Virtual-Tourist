@@ -18,8 +18,6 @@ class DetailViewController: UIViewController {
         self.imageView.image = imageToDisplay
         
     }
-    
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +29,4 @@ class DetailViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-
 }

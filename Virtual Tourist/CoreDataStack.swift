@@ -11,7 +11,6 @@ import CoreData
 
 class CoreDataStack: NSObject {
     
-    
     // MARK: - Core Data stack
     
     class func sharedObject() -> CoreDataStack {
@@ -24,8 +23,6 @@ class CoreDataStack: NSObject {
         return instance.sharedInstance
     
     }
-        
-    
     
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.eichler.Virtual_Tourist" in the application's documents Application Support directory.
@@ -87,5 +84,4 @@ class CoreDataStack: NSObject {
             }
         }
     }
-   
 }

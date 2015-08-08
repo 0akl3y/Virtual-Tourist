@@ -9,7 +9,6 @@
 import UIKit
 import CoreData
 
-
 @objc protocol FlickerClientDelegate{
     
     // If the basic information is fetche the flicker client will start to fetcht the images
@@ -25,7 +24,6 @@ import CoreData
     optional func errorOccuredWhileFetching(error:NSError)
 
 }
-
 
 class FlickerClient: SimpleNetworking {
     
@@ -43,9 +41,7 @@ class FlickerClient: SimpleNetworking {
     let DATA_FORMAT = "json"
     let NO_JSON_CALLBACK = "1"
     
-    
     func fetchPinFromFlickr(pin:Pin, entriesPerPage:Int, page:Int?){
-        
         
         let flickerClient = SimpleNetworking()
         
@@ -65,8 +61,6 @@ class FlickerClient: SimpleNetworking {
         self.sendGETRequest(BASE_URL, GETData: methodArguments, headerValues: nil) { (result, error) -> Void in
             
             if(error != nil){
-                
-                println("There was an error converting the JSON Data: \(error)")
                 self.delegate?.errorOccuredWhileFetching?(error!)
                 return
             
@@ -89,11 +83,9 @@ class FlickerClient: SimpleNetworking {
                 let lastPageNumber = photoList["page"] as! NSNumber
                 pin.lastPage = lastPageNumber.intValue
                 
-                
                 //Keep track of the current indx in a cheap way
                 var currentIdx = 0
                 let allPhotos = photoList["photo"] as! [[String: AnyObject]]
-                
                 
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     
@@ -133,7 +125,6 @@ class FlickerClient: SimpleNetworking {
                                     //start adding the image entities when the actual image has been stored completely to keep everyting
                                     //in sync.
                                     
-                                    
                                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                         
                                         var argumentsDict = [ImagePropertyKey.Title: photoDict["title"]!, ImagePropertyKey.FileURL:  result!, ImagePropertyKey.ID: photoDict["id"] as! String]
@@ -154,8 +145,6 @@ class FlickerClient: SimpleNetworking {
                                             self.delegate?.didDownloadAllImages?()
                                             
                                         }
-                                        
-                                        
                                     })
                                     
                                 })

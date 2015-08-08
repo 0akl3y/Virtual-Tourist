@@ -23,9 +23,7 @@ class Image: NSManagedObject {
     @NSManaged var fileURL: String
     @NSManaged var id: String
     @NSManaged var dateAdded: NSDate
-    
     @NSManaged var pin: Pin
-    
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         
@@ -38,7 +36,6 @@ class Image: NSManagedObject {
         let entity = NSEntityDescription.entityForName("Image", inManagedObjectContext: CoreDataStack.sharedObject().managedObjectContext!)
         
         super.init(entity: entity!, insertIntoManagedObjectContext: CoreDataStack.sharedObject().managedObjectContext!)
-        println("image is inserted in the managed object context")
         
         self.title = imageProperties[ImagePropertyKey.Title] as! String
         self.fileURL = imageProperties[ImagePropertyKey.FileURL] as! String
@@ -46,6 +43,4 @@ class Image: NSManagedObject {
         self.dateAdded = NSDate()
     
     }
-    
-
 }

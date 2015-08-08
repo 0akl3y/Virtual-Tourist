@@ -10,10 +10,8 @@ import UIKit
 
 class ImageCollectionViewCell: UICollectionViewCell {
     
-    
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
-    
     
     func setImage(image:UIImage){
         
@@ -28,6 +26,4 @@ class ImageCollectionViewCell: UICollectionViewCell {
         self.activityIndicator.startAnimating()    
     
     }
-    
-    
 }

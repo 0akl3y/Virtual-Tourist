@@ -47,7 +47,6 @@ class SimpleNetworking: NSObject {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        
         if var additionalHeaderFields = additionalHeaderValues {
             
             for (key, value) in additionalHeaderFields{
@@ -76,7 +75,6 @@ class SimpleNetworking: NSObject {
             
         }
         task.resume()
-        
     }
     
     func sendGETRequest(targetURL: String, GETData: [String:AnyObject]?, headerValues:[String: String]?, completion:(result:NSData?, error:NSError?) -> Void) {
@@ -98,7 +96,6 @@ class SimpleNetworking: NSObject {
                     currentRequest.addValue(value , forHTTPHeaderField: key)
                     
                 }
-                
             }
         
             let task = sharedSession.dataTaskWithRequest(currentRequest) { data, response, error in
@@ -111,8 +108,8 @@ class SimpleNetworking: NSObject {
             completion(result: data, error: error)
             
         }
+
         task.resume()
-            
+        
     }
-    
 }

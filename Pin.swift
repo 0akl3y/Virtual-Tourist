@@ -11,7 +11,6 @@ import MapKit
 import CoreData
 
 class Pin: NSManagedObject, MKAnnotation {
-    
 
     @NSManaged var longitude: Double
     @NSManaged var latitude: Double
@@ -32,7 +31,6 @@ class Pin: NSManagedObject, MKAnnotation {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
     
-    
     init(coordinate:CLLocationCoordinate2D){
         
         var entityDescription = NSEntityDescription.entityForName("Pin", inManagedObjectContext: CoreDataStack.sharedObject().managedObjectContext!)
@@ -46,7 +44,6 @@ class Pin: NSManagedObject, MKAnnotation {
     }    
     
     //MKAnnotationDelegateMethods
-    
 
     func setCoordinate(coordinate: CLLocationCoordinate2D){
         
@@ -55,5 +52,4 @@ class Pin: NSManagedObject, MKAnnotation {
         self.latitude = coordinate.latitude
         self.didChangeValueForKey("coordinate")
     }
-
 }

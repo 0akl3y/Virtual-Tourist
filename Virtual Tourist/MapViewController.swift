@@ -37,7 +37,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         self.longTapGesture.delegate = self
         self.flickerClient.delegate = self
         self.fetchPins()
-        
 
         // Do any additional setup after loading the view.
     }
@@ -67,10 +66,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         
         self.pinInFocus = nil
         self.deleteStatusLabel.hidden = true
-        
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
         
     }
 
@@ -104,7 +99,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         return self.mapView.convertPoint(tapPosition, toCoordinateFromView: self.mapView)
    
     }
-    
     
     @IBAction func longTapMap(sender: UILongPressGestureRecognizer) {
         
@@ -151,7 +145,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
             self.editButton.title = "Edit"
             self.deleteStatusLabel.hidden = true
         }
-        
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -193,7 +186,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     
     //MARK:- MKMapView delegate methods
     
-    
     func mapView(mapView: MKMapView!, regionDidChangeAnimated animated: Bool) {
         
         self.defaults.setValue(self.mapView.region.center.latitude, forKeyPath: "currentLatitude")
@@ -205,9 +197,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
     func mapViewDidFinishLoadingMap(mapView: MKMapView!) {
         
         for pinObject in self.controller!.fetchedObjects as! [Pin]{
-            
             mapView.addAnnotation(pinObject)
-            
         }
     }
     
@@ -222,7 +212,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         self.pinInFocus = view.annotation as? Pin
         self.mapView.deselectAnnotation(self.pinInFocus, animated: false)
         
-        
         if(self.deleteMode){
             
             self.removePinFromStore(self.pinInFocus!)
@@ -231,7 +220,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         }
         
         self.performSegueWithIdentifier("pictures", sender: self)
-        
     }
     
     //MARK:- FlickerClient delegate methods

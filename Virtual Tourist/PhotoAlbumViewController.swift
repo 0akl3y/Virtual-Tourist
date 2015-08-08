@@ -38,7 +38,8 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         var error:NSError? = nil
         
         self.collectionView.delegate = self
-        self.collectionView.dataSource = self
+        self.collectionView.dataSource = self // get rid of this annoying top margin in the collection view
+        self.automaticallyAdjustsScrollViewInsets = false
         self.mapView.delegate = self
         
         self.flickerClient?.delegate = self
@@ -86,8 +87,6 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         self.fetchedImagesController.delegate = self
         self.fetchedImagesController?.performFetch(&error)
         
-        println("Number of fetched objects \(self.fetchedImagesController?.fetchedObjects?.count)")
-        
         if(error != nil){
             
             println("There was an error fetching the images: \(error)")
@@ -105,9 +104,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
                 self.noImagesLabel.hidden = self.selectedPin!.images.count > 0
               
             })
-
         }
-        
     }
 
     // MARK: - FlickerClient delegate methods
@@ -123,8 +120,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     func didDownloadAllImages() {
         
         // download completed no more images expected
-        
-        println("download completed no more images")
+
         self.noImagesLabel.hidden = true
         self.newCollectionButton.enabled = true
         self.editButton.enabled = true
@@ -138,7 +134,6 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         
         self.noImagesLabel.hidden = false
         self.newCollectionButton.enabled = true
-        
 
     }
     
@@ -146,13 +141,10 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         
-        
         self.noImagesLabel.hidden = true
-        
         self.indicesToInsert = [NSIndexPath]()
         self.itemsToDelete = [NSIndexPath]()
     }
-    
 
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         
@@ -172,7 +164,6 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
                 self.collectionView.deleteItemsAtIndexPaths(itemsToDelete)
             
             }
-            
 
         default:
             return
@@ -196,7 +187,6 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
             self.shouldReloadAll = false
         
         }
-
     }
     
     // MARK:- CollectionView Delegate & Data Source
@@ -205,24 +195,19 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
 
         var sectionInfo =  self.fetchedImagesController.sections![section] as! NSFetchedResultsSectionInfo
         
-        println("the number of expected images is currently: \(self.selectedPin?.expectedImages)")
-        
         if let expectedDownloads = self.selectedPin?.expectedImages{
             // This means images are expected and eventually not yet in the managedObjectContext
             
             if(expectedDownloads > sectionInfo.numberOfObjects){
             // This means the number of expected object is larger than the number of objects already fetched
                 
-                println("expectedDownloads is: \(expectedDownloads)")
                 return expectedDownloads
             
             }
-        
         }
         
         return self.selectedPin!.images.count
     }
-
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
@@ -248,10 +233,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
             }            
         }
         
-        cell.contentView.backgroundColor = UIColor.redColor()
-        
-        return cell
-                
+        return cell                
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -312,8 +294,6 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         self.flickerClient?.fetchPinFromFlickr(self.selectedPin!, entriesPerPage: 20, page: pageToFetch)
     }
     
-    
-    
     @IBAction func toggleDeleteMode(sender: AnyObject) {
         
         self.editMode = !self.editMode
@@ -358,7 +338,4 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         
         mapView.setCamera(zoomedCamera, animated: true)
     }
-
-
 }
-

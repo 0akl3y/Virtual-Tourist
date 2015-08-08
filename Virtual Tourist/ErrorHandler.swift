@@ -12,7 +12,6 @@ import UIKit
 class ErrorHandler: NSObject {
     
     let targetViewController: UIViewController
-    
     init(targetVC:UIViewController){
         
         self.targetViewController = targetVC
@@ -21,16 +20,12 @@ class ErrorHandler: NSObject {
     
     func displayErrorMessage(error:NSError){
         var errorMessage = error.userInfo![NSLocalizedDescriptionKey] as! String
-        
         var alertView = UIAlertController(title: "Ooops!", message: errorMessage, preferredStyle: UIAlertControllerStyle.Alert)
         
         var action = UIAlertAction(title: "Close", style: UIAlertActionStyle.Cancel, handler: nil)
-        
         alertView.addAction(action)
         
         self.targetViewController.presentViewController(alertView, animated: true, completion: nil)
     
     }
-    
-   
 }

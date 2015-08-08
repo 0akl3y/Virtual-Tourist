@@ -6,9 +6,6 @@
 //  Copyright (c) 2015 Eichler. All rights reserved.
 //
 
-
-
-
 import UIKit
 
 class ImageCache: NSObject {
@@ -19,7 +16,6 @@ class ImageCache: NSObject {
     
     let cache = NSCache()
     
-    
     func pathForFile(fileName:String) -> String{
         
         let saveLocation:NSURL = self.documentsDirectory.URLByAppendingPathComponent(fileName)
@@ -27,16 +23,13 @@ class ImageCache: NSObject {
     
     }
     
-    
     func loadImage(imageName:String?) -> UIImage? {
         
         //Create the file path
         
         let path = self.pathForFile(imageName!)
         
-        
         //Check if image is in cache
-        
     
         if let image:UIImage = self.cache.objectForKey(path) as? UIImage{
             
@@ -59,7 +52,6 @@ class ImageCache: NSObject {
     func storeImage(fileName:String, image:UIImage?, completion:((result:String?) -> Void)?){
         
         // Store the image in the documents directory and return path to save location. If no image exists (image == nil) remove any existing image from cache and documents directory.
-    
         
         let saveLocation:NSURL = self.documentsDirectory.URLByAppendingPathComponent(fileName)
         
@@ -70,14 +62,12 @@ class ImageCache: NSObject {
             cache.removeObjectForKey(fileName)
             NSFileManager.defaultManager().removeItemAtPath(saveLocation.path!, error: &error)
         
-        
             if(error != nil){
                 
-                println("the image \(fileName) is nil and could not be removed: \(error)")
+                println("the image \(fileName) could not be removed: \(error)")
             }
             
             return
-        
         }
 
         //Cache the image
@@ -93,5 +83,4 @@ class ImageCache: NSObject {
             completion!(result: saveLocation.path!)
         }
     }
-   
 }
