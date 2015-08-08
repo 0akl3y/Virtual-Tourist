@@ -70,8 +70,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         
     }
     
-
-    
     override func viewWillDisappear(animated: Bool) {
         
     }
@@ -232,7 +230,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
             
         }
         
-        
         self.performSegueWithIdentifier("pictures", sender: self)
         
     }
@@ -243,7 +240,4 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         var errorMessage = ErrorHandler(targetVC: self)
         errorMessage.displayErrorMessage(error)
     }
-    
-    
-
 }

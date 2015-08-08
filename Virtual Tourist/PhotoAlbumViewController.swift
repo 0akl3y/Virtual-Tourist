@@ -347,6 +347,17 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         self.newCollectionButton.enabled = true
         
     }
+    
+    //MARK:- MapView delegate methods
+    
+    func mapView(mapView: MKMapView!, didAddAnnotationViews views: [AnyObject]!) {
+        
+        var viewPoint = CLLocationCoordinate2DMake(self.selectedPin!.coordinate.latitude - 0.1, self.selectedPin!.coordinate.longitude)
+        
+        var zoomedCamera = MKMapCamera(lookingAtCenterCoordinate: self.selectedPin!.coordinate, fromEyeCoordinate:viewPoint, eyeAltitude: 50000.0 as CLLocationDistance)
+        
+        mapView.setCamera(zoomedCamera, animated: true)
+    }
 
 
 }
