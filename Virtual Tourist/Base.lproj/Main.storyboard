@@ -107,7 +107,7 @@
                                     <size key="itemSize" width="120" height="120"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="5" minY="23" maxX="5" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="eN3-8a-N1y" customClass="ImageCollectionViewCell" customModule="Virtual_Tourist" customModuleProvider="target">
@@ -169,10 +169,10 @@
                             <constraint firstAttribute="centerY" secondItem="bd1-bO-rwT" secondAttribute="centerY" id="6JU-5r-5oJ"/>
                             <constraint firstAttribute="centerX" secondItem="vXy-cf-Nga" secondAttribute="centerX" id="A5O-Co-0fH"/>
                             <constraint firstAttribute="width" secondItem="vXy-cf-Nga" secondAttribute="width" id="FCv-7H-7FO"/>
-                            <constraint firstItem="a0L-h9-sNL" firstAttribute="top" secondItem="vXy-cf-Nga" secondAttribute="bottom" constant="-44" id="JAC-xV-JLb"/>
                             <constraint firstAttribute="centerX" secondItem="P49-Qy-KJ4" secondAttribute="centerX" id="LCJ-bM-mdY"/>
                             <constraint firstAttribute="width" secondItem="NPT-ZP-Q8a" secondAttribute="width" id="Tco-JH-6RX"/>
                             <constraint firstAttribute="height" secondItem="vXy-cf-Nga" secondAttribute="height" constant="150" id="djo-p3-DXL"/>
+                            <constraint firstItem="vXy-cf-Nga" firstAttribute="top" secondItem="NPT-ZP-Q8a" secondAttribute="bottom" id="lMz-c9-jPm"/>
                             <constraint firstAttribute="centerX" secondItem="NPT-ZP-Q8a" secondAttribute="centerX" id="ndh-ty-OYu"/>
                             <constraint firstItem="P49-Qy-KJ4" firstAttribute="top" secondItem="NPT-ZP-Q8a" secondAttribute="bottom" id="obT-CC-0sM"/>
                             <constraint firstAttribute="centerX" secondItem="bd1-bO-rwT" secondAttribute="centerX" id="tbU-bQ-fhl"/>
