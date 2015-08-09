@@ -180,12 +180,12 @@
                     </view>
                     <toolbarItems>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="bov-W1-zR7"/>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Bwd-NC-k6y"/>
                         <barButtonItem enabled="NO" title="New Collection" id="k36-FJ-HMA">
                             <connections>
                                 <action selector="fetchNewCollection:" destination="Ah7-4n-0Wa" id="Dyn-NN-QhS"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Bwd-NC-k6y"/>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Pictures" id="cra-N8-TIN">
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="frf-GJ-j9T">

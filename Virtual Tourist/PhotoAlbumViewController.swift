@@ -95,7 +95,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         
         //update button status after fetch
         
-        if(self.selectedPin!.expectedImages == nil){
+        if(self.selectedPin!.expectedImages == nil && self.flickerClient?.isFetching == false){
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 

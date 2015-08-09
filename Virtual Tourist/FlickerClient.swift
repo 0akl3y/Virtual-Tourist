@@ -29,6 +29,7 @@ class FlickerClient: SimpleNetworking {
     
     let fileCache: ImageCache = ImageCache()
     var delegate: FlickerClientDelegate?
+    var isFetching = false
 
     //The number of images that will be fetched
     var totalEntries: Int?
@@ -43,6 +44,7 @@ class FlickerClient: SimpleNetworking {
     
     func fetchPinFromFlickr(pin:Pin, entriesPerPage:Int, page:Int?){
         
+        self.isFetching = true
         let flickerClient = SimpleNetworking()
         
         let lat = pin.coordinate.latitude
@@ -93,6 +95,7 @@ class FlickerClient: SimpleNetworking {
                         
                         pin.expectedImages = nil //Download completed no more images expectedd
                         self.delegate?.foundNoImagesForPin?()
+                        self.isFetching = false
                         CoreDataStack.sharedObject().saveContext()
                         return
                     }
@@ -143,6 +146,7 @@ class FlickerClient: SimpleNetworking {
                                             pin.expectedImages = nil // download completed no more images expected
                                             CoreDataStack.sharedObject().saveContext()
                                             self.delegate?.didDownloadAllImages?()
+                                            self.isFetching = false
                                             
                                         }
                                     })
